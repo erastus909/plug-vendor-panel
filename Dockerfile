@@ -13,7 +13,7 @@ RUN rm -rf node_modules package-lock.json && npm install --prefer-offline --no-a
 # Copy source code
 COPY . .
 
-RUN npm run build --omit=dev
+RUN npm run build:preview --omit=dev
 
 FROM nginx:alpine
 
@@ -21,7 +21,7 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 5173
+EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
   CMD wget --quiet --tries=1 --spider http://localhost/health || exit 1
