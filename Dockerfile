@@ -1,17 +1,15 @@
 FROM node:20-alpine AS builder
 
-# Enable Corepack for modern Yarn support
-RUN corepack enable
-
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json* ./
 
-RUN yarn install --frozen-lockfile
+RUN npm ci --production=false
 
+# Copy source code
 COPY . .
 
-RUN yarn generate:static && yarn build:admin
+RUN npm run generate:static && npm run build:preview
 
 FROM nginx:alpine
 
