@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY package.json package-lock.json* ./
 
-RUN npm ci --production=false
+RUN npm ci --omit=dev
 
 # Copy source code
 COPY . .
 
-RUN npm run generate:static && npm run build:preview
+RUN  npm run build:preview
 
 FROM nginx:alpine
 
