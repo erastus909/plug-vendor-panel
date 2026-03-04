@@ -2,8 +2,7 @@ import { useParams } from "react-router-dom"
 
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton"
 import { TwoColumnPage } from "../../../components/layout/pages"
-import { useProduct } from "../../../hooks/api/products"
-import { ProductAttributeSection } from "./components/product-attribute-section"
+import { useProduct } from '../../../hooks/api'
 import { ProductGeneralSection } from "./components/product-general-section"
 import { ProductMediaSection } from "./components/product-media-section"
 import { ProductOptionSection } from "./components/product-option-section"
@@ -12,12 +11,12 @@ import { ProductVariantSection } from "./components/product-variant-section"
 
 import { useDashboardExtension } from "../../../extensions"
 import { ProductAdditionalAttributesSection } from "./components/product-additional-attribute-section/ProductAdditionalAttributesSection"
-// import { ProductShippingProfileSection } from './components/product-shipping-profile-section';
 
 export const ProductDetail = () => {
   const { id } = useParams()
   const { product, isLoading, isError, error } = useProduct(id!, {
-    fields: "*variants.inventory_items,*categories",
+    fields:
+      "*categories,attribute_values.*,attribute_values.attribute.*,*options",
   })
 
   const { getWidgets } = useDashboardExtension()
@@ -54,8 +53,8 @@ export const ProductDetail = () => {
       <TwoColumnPage.Sidebar>
         {/* <ProductShippingProfileSection product={product} /> */}
         <ProductOrganizationSection product={product} />
-        <ProductAttributeSection product={product} />
-        {/* <ProductAdditionalAttributesSection product={product as any} /> */}
+        {/* <ProductAttributeSection product={product} /> */}
+        <ProductAdditionalAttributesSection product={product} />
       </TwoColumnPage.Sidebar>
     </TwoColumnPage>
   )

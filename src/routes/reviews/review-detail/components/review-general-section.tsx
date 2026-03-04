@@ -5,12 +5,13 @@ import { StatusCell } from "../../../../components/table/table-cells/review/stat
 import { ActionMenu } from "../../../../components/common/action-menu"
 import { ExclamationCircle } from "@medusajs/icons"
 import { Link } from "react-router-dom"
+import { Review } from "../../../../types/user"
 
 export const ReviewGeneralSection = ({
   review,
   isRequested = false,
 }: {
-  review: any
+  review: Review
   isRequested?: boolean
 }) => {
   return (
@@ -52,7 +53,9 @@ export const ReviewGeneralSection = ({
       </div>
       <div className="px-6 py-4 grid grid-cols-2">
         <div>Review</div>
-        <div>{review.customer_note}</div>
+        <div className="whitespace-pre-line break-words">
+          {review.customer_note}
+        </div>
       </div>
       <div className="px-6 py-4 grid grid-cols-2">
         <div>Reply</div>
